@@ -1,0 +1,1 @@
+bon je pense avoir fini le cryptage de données : j'ai passé le texte crypté en majuscules, modifier la clé pour qu'elle prenne en compte les maj et les accents et il est possible de mettre des espaces dans une phrase clé, le cryptage marche toujours.j'ai modifier le cryptage pour qu'il prenne en compte les maj aussi.
