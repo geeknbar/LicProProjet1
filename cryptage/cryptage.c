@@ -3,17 +3,17 @@
 #include <stdio.h>
 
 
-#define MAX 20
+#define MAX 7
 
 
 //en-tête de la fonction de chiffrement
-void chiffrement(char *, char *, unsigned int *, unsigned int) ;
+void chiffrement(char *, char *, int *, int) ;
 int ponctuation (char c);
 
 
 //fonction de chiffrement ( pointeur ,poiteur , pointeur, taille de la clef)
 
-void chiffrement(char *entree, char *sortie, unsigned int *clef, unsigned int n)
+void chiffrement(char *entree, char *sortie,int *clef, int n)
 {
   //pointeur sur les fichiers d'entree et de sortie
   FILE *f_in, *f_out ;
@@ -23,7 +23,8 @@ void chiffrement(char *entree, char *sortie, unsigned int *clef, unsigned int n)
    * chiffre code ASCII du caractère de lecture du fichier de sortie
    * 
    */
-  int c, chiffre ;
+  int c;
+  int chiffre=0 ;
   
   //incrémente la clef pour passer au caractère suivant
   unsigned int i = 0 ;
@@ -46,10 +47,7 @@ void chiffrement(char *entree, char *sortie, unsigned int *clef, unsigned int n)
   while ((c = fgetc(f_in)) != EOF)
     {
       
-      if (1==0){
-	
-	
-      }else if (ponctuation(c)==0){
+      if (ponctuation(c)==1){
 	chiffre ==32;
 	
       }else{
@@ -79,11 +77,8 @@ int ponctuation (char c){
   }
 }
 
-void suppr_espace(char * mot ){
-  
-  
-  
-}
+
+
 
 int main(int argc, char *argv[0])
 {
@@ -91,8 +86,6 @@ int main(int argc, char *argv[0])
   int i,c;
   //chaine de caractère de la clef
   int clef[MAX];
-  //longeur de la clef
-  int longeur_clef=0;
   //tester le nombre d'arguments, exit si nombre incorrect 
    if (argc != 3)
     {
@@ -101,21 +94,18 @@ int main(int argc, char *argv[0])
       return(EXIT_FAILURE) ;
     }
     
-  printf("Entrez la clef sous forme d’un mot : \n") ;
+  printf("Entrez la clef sous forme d’un mot : ") ;
   
   
-  for (i=0 ; i< MAX ; i++)
-    {
+  for (i=0 ; i< MAX ; i++){
       c = getchar() ;
 
       if(c!=32){
 	clef[i] = c - 97 ;
-	longeur_clef=longeur_clef+1;
       }
-      
-    }
-    for(i=0 ;i<longeur_clef ;i++)
-    printf("%d (%c)", clef[i], clef[i]+97) ;
+    
+  }
+  printf("\n clef ;\n") ;
   
-  chiffrement(argv[1], argv[2], *clef, longeur_clef) ;
+  chiffrement(argv[1], argv[2], clef, MAX) ;
 }
