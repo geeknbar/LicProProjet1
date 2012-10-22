@@ -2,13 +2,14 @@
 #include <string.h>
 #include <stdio.h>
 
-
+#define VRAI 1
+#define FAUX 0 
 
 
 //en-tête de la fonction de chiffrement
 void chiffrement(char *, char *, unsigned int *,unsigned int) ;
 int ponctuation (char c);
-
+int accent(int c);
 
 //fonction de chiffrement ( pointeur ,poiteur , pointeur, taille de la clef)
 
@@ -27,6 +28,8 @@ void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
   
   //incrémente la clef pour passer au caractère suivant
   unsigned int i = 0 ;
+  //variable de test sur les accents
+  int booleen = FAUX; 
   
   //ouverture du fichier source
   if ((f_in = fopen(entree, "r")) == NULL)
@@ -46,18 +49,32 @@ void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
   while ((c = fgetc(f_in)) != EOF)
     {
       
-      if (ponctuation(c)==1){
-	chiffre=32;
+      //printf("cinit= %d\n",c);
+
+      if (c == 195){
+	booleen = VRAI;
+
+     }else{
+
+		 if (booleen == VRAI){
+		//printf("caccent= %d\n",c);
+		c = accent(c);
+		booleen = FAUX;
+		chiffre = (((c-97) + clef[i%n]) % 26) + 97 ;
+		i++ ;
 	
-      }else{
-	chiffre = (((c-97) + clef[i%n]) % 26) + 97 ;
-	i++ ;
-      }
-      
-      fprintf(f_out,"%c",chiffre) ;
-      
-       
-    }
+		 }else if (ponctuation(c)==1){
+		chiffre =32;
+	
+		 }else{
+		chiffre = (((c-97) + clef[i%n]) % 26) + 97 ;
+		i++ ;
+		 }
+		 
+		 fprintf(f_out,"%c",chiffre) ;
+		 
+    }   
+}
     
   //fermeture des fichiers source et sortie  
   fclose(f_in) ;
@@ -65,6 +82,29 @@ void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
   return ;
 }
   
+/*
+ *Fonction de test sur les accents
+ */
+int accent(int c)
+{
+		if( c == 169 || c == 168 || c == 170 ){
+		c = 'e';
+
+		 }else if( c == 160){
+		c = 'a';
+
+
+		 }else if( c == 185){
+		c = 'u';
+		
+		 }else if( c == 167){
+		c = 'c';
+		}
+//printf("c3= %d\n",c);
+
+return c;		
+}
+
 /*
  *fonction qui retourne 1 si le caractère est une ponctuation, 0 si il ne l'est pas 
  *
