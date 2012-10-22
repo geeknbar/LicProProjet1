@@ -70,7 +70,7 @@ void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
  *
  */  
 int ponctuation (char c){
-  if ((c>=32 && c<=64)||(c>=91 && c<=96)||(c>=123 && c<=126)){
+  if ((c>=0 && c<=64)||(c>=91 && c<=96)||(c>=123 && c<=126)){
     return 1;
   }else{
     return 0;
@@ -119,9 +119,6 @@ int main(int argc, char *argv[0])
       
     
   }
-  
-  
-  
   
   chiffrement(argv[1], argv[2], clef, longueur_clef) ;
 }

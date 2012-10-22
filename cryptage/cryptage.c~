@@ -3,17 +3,16 @@
 #include <stdio.h>
 
 
-#define MAX 7
 
 
 //en-tête de la fonction de chiffrement
-void chiffrement(char *, char *, int *, int) ;
+void chiffrement(char *, char *, unsigned int *,unsigned int) ;
 int ponctuation (char c);
 
 
 //fonction de chiffrement ( pointeur ,poiteur , pointeur, taille de la clef)
 
-void chiffrement(char *entree, char *sortie,int *clef, int n)
+void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 {
   //pointeur sur les fichiers d'entree et de sortie
   FILE *f_in, *f_out ;
@@ -85,8 +84,9 @@ int main(int argc, char *argv[0])
 {
  
   int i,c;
-  //chaine de caractère de la clef
-  int clef[MAX];
+  unsigned int longueur_clef;
+ 
+  unsigned int *clef ;
   //tester le nombre d'arguments, exit si nombre incorrect 
    if (argc != 3)
     {
@@ -94,19 +94,31 @@ int main(int argc, char *argv[0])
       fprintf(stderr, "Syntaxe : %s fichier_entree fichier_sortie\n", argv[0]) ;
       return(EXIT_FAILURE) ;
     }
-    
-  printf("Entrez la clef sous forme d’un mot : ") ;
+   
+  printf("\n Entrez la longueur de la clef sans espace (exemple : texte sans espace = 15 )\t") ;
+  scanf("%u", &longueur_clef) ;
+  clef = malloc(longueur_clef * sizeof(unsigned int)) ;
   
   
-  for (i=0 ; i< MAX ; i++){
+  printf("Entrez la clef sous forme d’un mot sans espace de %d (exemple : textesansespace) : ",longueur_clef) ;
+  
+  //lire une foi le caractère pour lire entrée. 
+  c = getchar() ;
+  
+  for (i=0 ; i< longueur_clef ; i++){
       c = getchar() ;
 
-      if(c!=32){
+      
+       if(c==32){
+	printf("erreur d'espace");
+	return(EXIT_FAILURE) ;
+      }else{
+    
 	clef[i] = c - 97 ;
       }
+      
     
   }
-  printf("\n clef ;\n") ;
   
-  chiffrement(argv[1], argv[2], clef, MAX) ;
+  chiffrement(argv[1], argv[2], clef, longueur_clef) ;
 }
