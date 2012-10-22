@@ -48,14 +48,15 @@ void chiffrement(char *entree, char *sortie,int *clef, int n)
     {
       
       if (ponctuation(c)==1){
-	chiffre ==32;
+	chiffre=32;
 	
       }else{
 	chiffre = (((c-97) + clef[i%n]) % 26) + 97 ;
+	i++ ;
       }
       
       fprintf(f_out,"%c",chiffre) ;
-      i++ ;
+      
        
     }
     
@@ -70,7 +71,7 @@ void chiffrement(char *entree, char *sortie,int *clef, int n)
  *
  */  
 int ponctuation (char c){
-  if ((c>=33 && c<=64)||(c>=91 && c<=96)||(c>=123 && c<=126)){
+  if ((c>=32 && c<=64)||(c>=91 && c<=96)||(c>=123 && c<=126)){
     return 1;
   }else{
     return 0;
