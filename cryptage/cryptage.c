@@ -2,8 +2,13 @@
 #include <string.h>
 #include <stdio.h>
 
+
+#define MAX 20
+
+
 //en-tête de la fonction de chiffrement
 void chiffrement(char *, char *, unsigned int *, unsigned int) ;
+int ponctuation (char c);
 
 
 //fonction de chiffrement ( pointeur ,poiteur , pointeur, taille de la clef)
@@ -41,7 +46,7 @@ void chiffrement(char *entree, char *sortie, unsigned int *clef, unsigned int n)
   while ((c = fgetc(f_in)) != EOF)
     {
       
-      if (Anthony){
+      if (1==0){
 	
 	
       }else if (ponctuation(c)==0){
@@ -83,10 +88,11 @@ void suppr_espace(char * mot ){
 int main(int argc, char *argv[0])
 {
  
+  int i,c;
   //chaine de caractère de la clef
-  char mot[20];
+  int clef[MAX];
   //longeur de la clef
-  int longeur_clef;
+  int longeur_clef=0;
   //tester le nombre d'arguments, exit si nombre incorrect 
    if (argc != 3)
     {
@@ -96,9 +102,20 @@ int main(int argc, char *argv[0])
     }
     
   printf("Entrez la clef sous forme d’un mot : \n") ;
-  scanf("%s",&mot);
   
-  longeur_clef=strlen(mot);
   
-  chiffrement(argv[1], argv[2], *mot, longeur_clef) ;
+  for (i=0 ; i< MAX ; i++)
+    {
+      c = getchar() ;
+
+      if(c!=32){
+	clef[i] = c - 97 ;
+	longeur_clef=longeur_clef+1;
+      }
+      
+    }
+    for(i=0 ;i<longeur_clef ;i++)
+    printf("%d (%c)", clef[i], clef[i]+97) ;
+  
+  chiffrement(argv[1], argv[2], *clef, longeur_clef) ;
 }
