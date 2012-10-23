@@ -1,0 +1,1 @@
+les decryptage complie et laisse bien les espaces et reste en maj mais ne décrypte pas correctement toutes les lettres. Je pense que ca vient du modulo 26 qui peut renvoyer des nombres négatifs (j'avais fait le test et modulo n est entre n-1 et -(n-1)... )
