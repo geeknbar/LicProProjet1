@@ -100,7 +100,6 @@ int main(int argc, char *argv[0])
 
       if (c == 195)
 				booleen = VRAI;
-
 			else
 			 if (booleen == VRAI)
 				{
@@ -111,20 +110,23 @@ int main(int argc, char *argv[0])
 				} 
 				else
 				{
-					if((c!=32) &&((c<65) || (c>90)))
-					{ 
-						clef[i] = c - 97 ;
+       	if((c!=32))		//si 'c' n'est pas un espace et n'est pas une lettre majuscule
+				{ 
+					if( (c<65) || (c>90) )	
+						{
+							clef[i] = c - 97 ; 							//affecte des résultats entre 0 et 25 sur les lettre minuscules
+							i++;
+						}
+					else 
+						{
+						clef[i] = c-65;
 						i++;
-				 	}
-					else
-					{
-					clef[i] = c - 65 ; 
-					i++;
-					}
-				}
-	
+						}
+			 	}
+			}
+		}
 	}
-
+																				//fermeture du while
 	
  	dechiffrement(argv[1], argv[2], clef, longueur_clef);
 

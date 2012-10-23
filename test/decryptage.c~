@@ -118,11 +118,8 @@ int main(int argc, char *argv[0])
 				 	}
 					else
 					{
-					if(c!=32)
-					{
-						clef[i] = c - 65 ; 							//affecte des résultats entre 0 et 25 sur les lettre majuscules
-						i++;
-					}
+					clef[i] = c - 65 ; 
+					i++;
 					}
 				}
 	
