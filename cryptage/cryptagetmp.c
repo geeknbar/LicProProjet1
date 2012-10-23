@@ -61,7 +61,7 @@ void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 		//printf("caccent= %d\n",c);
 		c = accent(c);
 		booleen = FAUX;
-		chiffre = (((c-97) + clef[i%n]) % 26) + 65 ; 
+		chiffre = (((c-97) + clef[i%n]) % 25) + 65 ; 
 		/*si la lettre est minuscule, 'c' est compris entre 0 et 25 
 		 *et on lui ajoute la clé puis on ajoute 65 pour que le résultat soit compris entre 65 et 90 i.e codes ascii de A et Z*/
 		i++ ;
@@ -70,7 +70,7 @@ void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 		chiffre =32;
 	
 		 }else{
-		chiffre = (((c-97) + clef[i%n]) % 26) + 65 ;
+		chiffre = (((c-97) + clef[i%n]) % 25) + 65 ;
 		i++ ;
 		 }
 		 
@@ -79,7 +79,7 @@ void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 	} 
 	else //si la lettre est majuscule
 	{
-		chiffre = (((c-65) + clef[i%n]) % 26) + 65 ;
+		chiffre = (((c-65) + clef[i%n]) % 25) + 65 ;
 		i++ ;
 		fprintf(f_out,"%c",chiffre) ;
 	}  
