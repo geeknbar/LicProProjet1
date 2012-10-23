@@ -100,6 +100,7 @@ int main(int argc, char *argv[0])
 
       if (c == 195)
 				booleen = VRAI;
+
 			else
 			 if (booleen == VRAI)
 				{
@@ -110,7 +111,7 @@ int main(int argc, char *argv[0])
 				} 
 				else
 				{
-       	if((c!=32))		//si 'c' n'est pas un espace et n'est pas une lettre majuscule
+					       	if((c!=32))		//si 'c' n'est pas un espace et n'est pas une lettre majuscule
 				{ 
 					if( (c<65) || (c>90) )	
 						{
@@ -124,19 +125,13 @@ int main(int argc, char *argv[0])
 						}
 			 	}
 			}
-		}
-	}
-																				//fermeture du while
-	
-	
-	
+		}	
 
   if(i==longueur_clef-1){
     dechiffrement(argv[1], argv[2], clef, longueur_clef);
   }else{
     printf("veuillez rentrer un clef égale à votre longueur de clef\n");
   }
- 	
 
 	return 0;
 }

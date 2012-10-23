@@ -127,8 +127,11 @@ int main(int argc, char *argv[0])
 			}
 		}	
 
-	
- 	dechiffrement(argv[1], argv[2], clef, longueur_clef);
+  if(i==longueur_clef-1){
+    dechiffrement(argv[1], argv[2], clef, longueur_clef);
+  }else{
+    printf("veuillez rentrer un clef égale à votre longueur de clef\n");
+  }
 
 	return 0;
 }
