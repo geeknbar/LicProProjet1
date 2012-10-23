@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <ctype.h>
+#include<string.h>
+
+
+int main()
+{
+	char c;
+	c='é';
+
+	printf("%d\n", c);
+
+	return 0;
+	
+}
