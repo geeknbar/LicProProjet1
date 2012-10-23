@@ -186,7 +186,7 @@ int main(int argc, char *argv[0])
   if(i==longueur_clef-1){
     chiffrement(argv[1], argv[2], clef, longueur_clef) ;
   }else{
-    printf("veuillez rentrer un clef égale à votre longueur de clef\n");
+    printf("veuillez rentrer un clef égale à votre longueur de clef. Fin du cryptage\n");
   }
 
 	return 0;
