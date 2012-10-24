@@ -183,9 +183,12 @@ int main(int argc, char *argv[0])
 	}
 																				//fermeture du while
 
-  if(i==longueur_clef-1){
+  if(i==longueur_clef-1)
+	{
     chiffrement(argv[1], argv[2], clef, longueur_clef) ;
-  }else{
+  }
+	else
+	{
     printf("veuillez rentrer un clef égale à votre longueur de clef. Fin du cryptage\n");
   }
 
