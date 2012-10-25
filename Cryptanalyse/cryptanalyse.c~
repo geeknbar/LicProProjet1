@@ -147,13 +147,16 @@ double indiceCoincidence(int t[N], int nblettres)
 {
 	int i;
 	double indice=0;
-	for(i=0; i<N; i++)
+	double indice2=0;
+
+	for(i=0; i<N+1; i++)
 	{
 		indice=indice+(t[i]*(t[i]-1));
-		//indice=indice/(nblettres*(nblettres-1));
+		indice=indice/(nblettres*(nblettres-1));
+		indice2+=indice;
 	}
 
-	return indice ;
+	return indice2 ;
 }
 
 

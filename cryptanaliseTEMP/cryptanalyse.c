@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #define N 26
+#define CLEMAX 30
 
 
 void initTab(int t[N])
@@ -15,20 +16,45 @@ void initTab(int t[N])
 	
 
 //renvoie le nombre de lettres totales dans le texte et compte le nombre de chaque lettres du texte
-int nbLettres(char *entree, int t[N])
+int nbLettres(char *entree, int t[N],int longueurcle)
 {
 	FILE *f_in;
 	unsigned int nbLettresTotal=0;
 	int c;
-
+	int i=0;
+	int val=0;
+	int test=0;
+	
 	if ((f_in = fopen(entree, "r")) == NULL)
 		{
       fprintf(stderr,"Erreur ds l’ouverture du fichier %s\n", entree);
       return;
 		}
 
-  while ((c = fgetc(f_in)) != EOF)
-  	{
+  while (val==0){
+    
+    if(test==0){
+      c = fgetc(f_in);
+      test=1;
+    }else{
+   
+    for(i=0;i<longueurcle;i++){
+      c = fgetc(f_in);
+      if(c== EOF)
+	val=1;
+    }
+    }
+    /*
+    while(i<7){
+      c = fgetc(f_in);
+      i++;
+      if(c== EOF)
+	val=1;
+      //printf("%c", c);
+      
+      
+    }*/
+    
 			switch (c) 
 			{
 				case 'A' : 
@@ -137,7 +163,11 @@ int nbLettres(char *entree, int t[N])
 						break;
 				default : break;
 		}
-		printf("%c", c);
+		/*
+		if(c!=EOF){
+		  printf("%c", c);
+		}
+		*/
 	}
 		return nbLettresTotal ;
 }
@@ -178,19 +208,32 @@ double indiceCoincidence(int t[N], int nblettres)
 int main(int argc, char *argv[0])
 {
 	int t[N];
-	int nblettre, i;
+	int nblettre, i,j;
 	double indice;
 
-	initTab(t);
-	nblettre=nbLettres(argv[1], t);
+
+	for(j=1; j<CLEMAX; j++){
+	  initTab(t);
+	  nblettre=0;
+	  indice=0;
+	  nblettre=nbLettres(argv[1], t,j);
+	
 
 	for(i=0; i<N; i++)
-		printf("%d ", t[i]);
+		printf(" %d %c |", t[i],(65+i));
+	printf("\n");	
+	printf("longeur cle teste : %d",j);
 	printf("\n");
 
+	
 	indice=indiceCoincidence(t, nblettre);
-	printf("%d\n", nblettre);
-	printf("%f\n", indice);
+	printf("nombre de lettre total %d\n", nblettre);
+	printf("indice de coincidence %f\n", indice);
+	printf("\n");
+	printf("**********************************************************************************");
+	printf("\n");
+	}
+
 	
 	return 0;
 }
