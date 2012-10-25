@@ -5,13 +5,18 @@
 #define N 26
 #define CLEMAX 30
 
+void initTab(int t[N]);
+void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle);
+double indiceCoincidence(int t[N], int nblettres);
+int longueurCle(char *entree, int t[N]);
+int lettreLaPlusPresente(int t[N]);
+
 void initTab(int t[N])
 {
    int i;
    for(i=0; i<N; i++)
        t[i]=0;
 }
-
    
 
 //renvoie le nombre de lettres totales dans le texte et compte le nombre de chaque lettres du texte
@@ -97,12 +102,30 @@ int longueurCle(char *entree, int t[N])
 }
 
 
+//retourne le numéro de la case du tableau qui a le plus grand nombre. Donne donc la lettre la plus présente dans le texte 
+int lettreLaPlusPresente(int t[N])
+{
+	int i, j, plusGrand;
+	plusGrand=j=0;
+
+	for(i=0; i<N; i++)
+	{
+		if(t[i]>=plusGrand)
+		{
+			plusGrand=t[i];
+			j=i;
+		}		
+	}
+	return j;
+}
+
 
 int main(int argc, char *argv[0])
 {
    int t[N];
 
 		printf("longueur clé probable = %d\n", longueurCle(argv[1], t));
+		printf("lettre la plus présente : %c \n", (lettreLaPlusPresente(t)+65));
 		
    
   return 0;
