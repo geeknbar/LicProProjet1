@@ -1,3 +1,0 @@
-Un wiki est un site web dont les pages sont modifiables par les visiteurs afin de permettre l'écriture et l'illustration collaboratives des documents numériques qu'il contient. (Un site wiki utilise des hyperliens liant les pages wiki entre elles, un langage de balisage et est modifiable au moyen d'un navigateur web1.)
-
-{Le premier wiki est créé en 1995 par Ward Cunningham pour réaliser la section d'un site sur la programmation informatique, qu'il a appelé WikiWikiWeb. En 2010, selon Alexa Internet, le plus consulté de tous les wikis est l'encyclopédie libre Wikipédia2.}
