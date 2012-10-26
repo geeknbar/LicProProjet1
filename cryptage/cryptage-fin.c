@@ -37,6 +37,11 @@ void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
   /**boucle sur le caractère du fichier source jusqu'à la fin de fichier**/
   while ((c = fgetc(f_in)) != EOF)
   {
+
+		if( (c>=48) && (c<=57) ) //si 'c' est un chiffre 
+			fprintf(f_out,"%c",c);
+		else
+		{
       
 		if( (c<65) || (c>90) )		//si la lettre n'est pas majuscule
 		{  
@@ -74,8 +79,10 @@ void chiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 			i++ ;
 			fprintf(f_out,"%c",chiffre) ;
 		}  
-	}												//fermeture du while
-    
+	  }												//fermeture du else
+  }//fermeture du while
+
+ 
   /**fermeture des fichiers source et sortie**/
   fclose(f_in) ;
   fclose(f_out) ;

@@ -30,6 +30,11 @@ void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 
 	while ((c = fgetc(f_in)) != EOF)
     {
+
+			if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
+				fprintf(f_out,"%c",c);
+			else
+			{
 			if (c==32)
 				chiffre=32;
 	
@@ -41,6 +46,7 @@ void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 		 
 		 
 		 	fprintf(f_out,"%c",chiffre) ;
+			}
 		}
 
 
