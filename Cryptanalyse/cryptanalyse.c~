@@ -178,10 +178,10 @@ int main(int argc, char *argv[0])
       fprintf(stderr, "\nErreur : nombre d’arguments invalide\n");
       fprintf(stderr, "Syntaxe : %s fichier_entree fichier_sortie\n", argv[0]);
       return(EXIT_FAILURE) ;
-   }
+   }*/
 
 	 tailleCle=longueurCle(argv[1], t);
-	 cle=malloc(tailleCle*sizeof(unsigned int));*/
+	 cle=malloc(tailleCle*sizeof(unsigned int));
 
 	 	 
 	 free(cle);

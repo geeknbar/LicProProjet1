@@ -39,7 +39,12 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
 
  while (val==0)
    {
-    //lit obligatoirement le premier caractere, pour eviter davoir le texte decaler
+    /*
+     * lit obligatoirement le premier caractere, pour eviter davoir le texte decaler
+     * 
+     * A remplacer par fseek(f_in,1 , SEEK_SET);
+     * 
+     */
     if(test==0)
     {
      c = fgetc(f_in);
