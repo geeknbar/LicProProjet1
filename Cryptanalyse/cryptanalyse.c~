@@ -50,8 +50,6 @@ while (compteurLongeurCle!=tailleCle+1){
      
       fseek(f_in,j,SEEK_SET);
       c = fgetc(f_in);
-      printf("lettre %c",c);
-      printf("\n");
       test=1;
     }
     else
@@ -70,34 +68,25 @@ while (compteurLongeurCle!=tailleCle+1){
        }
      }
      
-	 printf("lettre tableau %c",c);
-      printf("\n");
+
      if((c>=65) && (c<=90)) //si la lettre est majuscule
      {
-       t[c-65]=t[c-65]+1; /*retire 65 a la lettre pour qu'elle corresponde a sa case das le tableau (0 pour A, 1 our B etc..) et *ajoute +1 a chaque fois que la lettre 'c' est rencontrée*/
+       t[c-65]=t[c-65]+1; /*retire 65 a la lettre pour qu'elle corresponde a sa case das le tableau (0 pour A, 1 our B etc..) et 
+													*ajoute +1 a chaque fois que la lettre 'c' est rencontrée*/
      }
 
    } //fin while secondaire
 
-   int k=0;
-   for(k=0;k<N;k++)
-     printf(" %c %d |",k+65,t[k]);
-   
-   printf("\n");
-   int test=lettreMotCle(t);
-   printf("%c",test+65);
-   printf("\n");
    
    cle[compteurLongeurCle-1]=test;
    compteurLongeurCle++;
    j++;
-   printf("%d",compteurLongeurCle);
-   printf("\n");
-   
-   
-}//fin while principal
-fclose(f_in);
+  
+	}//fin while principal
+	fclose(f_in);
 }
+
+
 
 //renvoie le nombre de lettres totales dans le texte et compte le nombre de chaque lettres du texte
 void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
@@ -264,18 +253,16 @@ int main(int argc, char *argv[0])
 	 unsigned int tailleCle;
 	 int i;
 
-	 /*if (argc != 3)											//tester le nombre d'arguments, exit si nombre incorrect 
+	 if (argc != 3)											//tester le nombre d'arguments, exit si nombre incorrect 
    {
       fprintf(stderr, "\nErreur : nombre d’arguments invalide\n");
       fprintf(stderr, "Syntaxe : %s fichier_entree fichier_sortie\n", argv[0]);
       return(EXIT_FAILURE) ;
-   }*/
+   }
 
 	 tailleCle=longueurCle(argv[1], t);
 	 cle=calloc(tailleCle,sizeof(unsigned int));
 	 motClef(argv[1],t,cle,tailleCle);
-	 for (i=0;i<tailleCle;i++)
-	   printf("%c",cle[i]+65);
 	 free(cle);
    
   return 0;
