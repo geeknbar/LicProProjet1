@@ -3,7 +3,6 @@
 #include <stdio.h>
 
 #define N 26
-#define CLEMAX 30
 
 void initTab(int t[N]);
 void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle);
@@ -11,6 +10,7 @@ double indiceCoincidence(int t[N], int nblettres);
 unsigned int longueurCle(char *entree, int t[N]);
 int lettreMotCle(int t[N]);
 void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n);
+void motClef(char *entree, int t[N], int *cle, int tailleCle);
 
 void initTab(int t[N])
 {
@@ -19,6 +19,61 @@ void initTab(int t[N])
        t[i]=0;
 }
    
+//renvoie le nombre de lettres totales dans le texte et compte le nombre de chaque lettres du texte
+void motClef(char *entree, int t[N], int *cle, int tailleCle)
+{
+   FILE *f_in;
+   int compteurLongeurCle =1;
+   int c,j;
+   int i=0;
+   //valeur pour sortir du while principal quand on atteint la fin de fichier
+   int val=0;
+   //valeur pour lire obligatoirement le premier caractere du fichier source et ne pas tout decaler
+   int test=0;
+   if ((f_in = fopen(entree, "r")) == NULL)
+       {
+     fprintf(stderr,"Erreur ds l’ouverture du fichier %s\n", entree);
+     return;
+       }
+while (compteurLongeurCle!=tailleCle){
+  initTab(t);
+  
+ while (val==0)
+   {
+    
+    if(test==0)
+    {
+     for(j=0;j<compteurLongeurCle;j++)
+      fseek(f_in,0+j , SEEK_SET);
+     test=1;
+    }
+    else
+    {  
+       for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
+       {
+         if(c==32)
+         {
+           c = fgetc(f_in);
+           i--;
+         }
+         else
+	   c = fgetc(f_in);
+         if(c== EOF)
+            val=1;
+       }
+     }
+     
+     if((c>=65) && (c<=90)) //si la lettre est majuscule
+     {
+       t[c-65]=t[c-65]+1; /*retire 65 a la lettre pour qu'elle corresponde a sa case das le tableau (0 pour A, 1 our B etc..) et *ajoute +1 a chaque fois que la lettre 'c' est rencontrée*/
+     }
+   } //fin while secondaire
+
+   cle[compteurLongeurCle-1]=lettreMotCle(t);
+   compteurLongeurCle++;
+   
+}//fin while principal
+}
 
 //renvoie le nombre de lettres totales dans le texte et compte le nombre de chaque lettres du texte
 void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
@@ -39,7 +94,12 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
 
  while (val==0)
    {
-    //lit obligatoirement le premier caractere, pour eviter davoir le texte decaler
+    /*
+     * lit obligatoirement le premier caractere, pour eviter davoir le texte decaler
+     * 
+     * A remplacer par fseek(f_in,1 , SEEK_SET);
+     * 
+     */
     if(test==0)
     {
      c = fgetc(f_in);
@@ -146,6 +206,11 @@ void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 
 	while ((c = fgetc(f_in)) != EOF)
     {
+
+			if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
+				fprintf(f_out,"%c",c);
+			else
+			{
 			if (c==32)
 				chiffre=32;
 	
@@ -157,6 +222,7 @@ void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 		 
 		 
 		 	fprintf(f_out,"%c",chiffre) ;
+			}
 		}
 
 
@@ -164,7 +230,6 @@ void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
   fclose(f_out) ;
   return ;
 }
-
 
 
 int main(int argc, char *argv[0])
@@ -182,8 +247,9 @@ int main(int argc, char *argv[0])
 
 	 tailleCle=longueurCle(argv[1], t);
 	 cle=malloc(tailleCle*sizeof(unsigned int));
-
-	 	 
+	 motClef(argv[0],t,cle,tailleCle);
+	 for (i=0;i<tailleCle;i++)
+	   printf("%c",t[i]+65);
 	 free(cle);
    
   return 0;
