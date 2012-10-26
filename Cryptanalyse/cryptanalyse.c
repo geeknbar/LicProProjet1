@@ -8,8 +8,10 @@
 void initTab(int t[N]);
 void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle);
 double indiceCoincidence(int t[N], int nblettres);
-int longueurCle(char *entree, int t[N]);
-int lettreLaPlusPresente(int t[N]);
+unsigned int longueurCle(char *entree, int t[N]);
+int lettreMotCle(int t[N]);
+
+
 
 void initTab(int t[N])
 {
@@ -38,34 +40,36 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
 
  while (val==0)
    {
-    //lit obligatoirement le premier caractere, pour eviter davoir le texte decaler : a expliquer a Romain et Anthony
+    //lit obligatoirement le premier caractere, pour eviter davoir le texte decaler
     if(test==0)
-       {
+    {
      c = fgetc(f_in);
      test=1;
     }
-       else
-       {  
+    else
+    {  
        for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
-           {
-               if(c==32)
-               {
-                   c = fgetc(f_in);
-                   i--;
-               }
-               else
-             c = fgetc(f_in);
-         if(c== EOF)
-                   val=1;
-       		}
-       }
-     
-       if((c>=65) && (c<=90)) //si la lettre est majuscule
        {
-    		    t[c-65]=t[c-65]+1; /*retire 65 a la lettre pour qu'elle corresponde a sa case das le tableau (0 pour A, 1 our B etc..) et 																*ajoute +1 a chaque fois que la lettre 'c' est rencontrée*/
-           nbLettresTotal++;
+         if(c==32)
+         {
+           c = fgetc(f_in);
+           i--;
+         }
+         else
+     			 c = fgetc(f_in);
+					
+         if(c== EOF)
+            val=1;
        }
-   }
+     }
+     
+     if((c>=65) && (c<=90)) //si la lettre est majuscule
+     {
+       t[c-65]=t[c-65]+1; /*retire 65 a la lettre pour qu'elle corresponde a sa case das le tableau (0 pour A, 1 our B etc..) et 																*ajoute +1 a chaque fois que la lettre 'c' est rencontrée*/
+       nbLettresTotal++;
+     }
+   } //fin while
+
    *tailleText=nbLettresTotal;
 }
 
@@ -84,7 +88,7 @@ double indiceCoincidence(int t[N], int nblettres)
 }
 
 
-int longueurCle(char *entree, int t[N])
+unsigned int longueurCle(char *entree, int t[N])
 {
 	int j, nblettre;
 	double indice=0;
@@ -102,8 +106,8 @@ int longueurCle(char *entree, int t[N])
 }
 
 
-//retourne le numéro de la case du tableau qui a le plus grand nombre. Donne donc la lettre la plus présente dans le texte 
-int lettreLaPlusPresente(int t[N])
+//retourne la case du tableau qui est 4 cases avant la lettre la plus présente dans le tableau. La case retournée est
+int lettreMotCle(int t[N])
 {
 	int i, j, plusGrand;
 	plusGrand=j=0;
@@ -116,17 +120,21 @@ int lettreLaPlusPresente(int t[N])
 			j=i;
 		}		
 	}
-	return j;
+	return (((j-4)+26)%26);
 }
 
 
 int main(int argc, char *argv[0])
 {
    int t[N];
+	 unsigned int *cle;
+	 unsigned int tailleCle;
 
-		printf("longueur clé probable = %d\n", longueurCle(argv[1], t));
-		printf("lettre la plus présente : %c \n", (lettreLaPlusPresente(t)+65));
-		
+	 tailleCle=longueurCle(argv[1], t);
+	 cle=malloc(tailleCle*sizeof(unsigned int));
+
+	 	 
+	 free(cle);
    
   return 0;
 }
