@@ -10,7 +10,6 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle);
 double indiceCoincidence(int t[N], int nblettres);
 unsigned int longueurCle(char *entree, int t[N]);
 int lettreMotCle(int t[N]);
-void MotCle(char *entree, int t[N], int tailleCle, unsigned int **cle);
 
 
 
@@ -125,65 +124,6 @@ int lettreMotCle(int t[N])
 }
 
 
-void MotCle(char *entree, int t[N], int tailleCle, unsigned int **cle)
-{
-	FILE *f_in, *debut;
-	int c, val, caseCle, i;
-	val=0;
-	caseCle=0;
-  
-  if ((f_in = fopen(entree, "r")) == NULL)
-	{
-		fprintf(stderr,"Erreur ds l’ouverture du fichier %s\n", entree);
-    return;
-  }
-	
-	debut=f_in;
-
-
-	while((caseCle<tailleCle)&&(val==0))
-	{
-		initTab(t);
-	/*while(val==0)
-	{
-			for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
-       {
-         if(c==32)
-         {
-           c = fgetc(debut);
-           i--;
-         }
-         else
-     			 c = fgetc(debut);
-					
-
-         if((c == EOF) && (caseCle<tailleCle))
-					{
-						debut=f_in;
-						i=tailleCle;
-					}
-				 else
-					if((c == EOF) && (caseCle>=tailleCle))
-            val=1;
-       }//fin for
-     
-     
-     if((c>=65) && (c<=90)) //si la lettre est majuscule
-     {
-       t[c-65]=t[c-65]+1; /*retire 65 a la lettre pour qu'elle corresponde a sa case das le tableau (0 pour A, 1 our B etc..) et 																*ajoute +1 a chaque fois que la lettre 'c' est rencontrée*
-     }
-
-   } //fin 2éme while*/
-
-		*cle[caseCle]=lettreMotCle(t);
-		caseCle++;
-
-	}//fin 1er while
-}
-
-
-
-
 int main(int argc, char *argv[0])
 {
    int t[N];
@@ -193,9 +133,8 @@ int main(int argc, char *argv[0])
 	 tailleCle=longueurCle(argv[1], t);
 	 cle=malloc(tailleCle*sizeof(unsigned int));
 
-	 MotCle(argv[1], t, tailleCle, &cle);
 	 	 
-		free(cle);
+	 free(cle);
    
   return 0;
 }

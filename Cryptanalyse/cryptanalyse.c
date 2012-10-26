@@ -106,7 +106,7 @@ unsigned int longueurCle(char *entree, int t[N])
 }
 
 
-//retourne la case du tableau qui est 4 cases avant la lettre la plus présente dans le tableau. La case retournée est
+//retourne la case du tableau qui est 4 cases avant la lettre la plus présente dans le tableau.
 int lettreMotCle(int t[N])
 {
 	int i, j, plusGrand;
