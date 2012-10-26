@@ -173,9 +173,15 @@ int main(int argc, char *argv[0])
 	 unsigned int *cle;
 	 unsigned int tailleCle;
 
+	 if (argc != 3)											//tester le nombre d'arguments, exit si nombre incorrect 
+   {
+      fprintf(stderr, "\nErreur : nombre d’arguments invalide\n");
+      fprintf(stderr, "Syntaxe : %s fichier_entree fichier_sortie\n", argv[0]);
+      return(EXIT_FAILURE) ;
+   }
+
 	 tailleCle=longueurCle(argv[1], t);
 	 cle=malloc(tailleCle*sizeof(unsigned int));
-	 printf("taille clé probable : %d\n", tailleCle);
 
 	 	 
 	 free(cle);
