@@ -10,8 +10,7 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle);
 double indiceCoincidence(int t[N], int nblettres);
 unsigned int longueurCle(char *entree, int t[N]);
 int lettreMotCle(int t[N]);
-
-
+void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n);
 
 void initTab(int t[N])
 {
@@ -122,6 +121,50 @@ int lettreMotCle(int t[N])
 	}
 	return (((j-4)+26)%26);
 }
+
+
+
+
+void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
+{
+  FILE *f_in, *f_out ;
+  int c;
+  int chiffre=0 ;
+  unsigned int i = 0 ;
+
+  if ((f_in = fopen(entree, "r")) == NULL)
+    {
+      fprintf(stderr,"Erreur ds l’ouverture du fichier %s\n", entree) ;
+      return ;
+    }
+    
+  if ((f_out = fopen(sortie, "w")) == NULL)
+    {
+      fprintf(stderr,"Erreur ds l’ouverture du fichier %s\n", sortie) ;
+      return ;
+    }
+
+	while ((c = fgetc(f_in)) != EOF)
+    {
+			if (c==32)
+				chiffre=32;
+	
+		 	else
+			{
+					chiffre = ((((c-65) - clef[i%n])+26) % 26)+ 65 ;
+					i++ ;
+			}
+		 
+		 
+		 	fprintf(f_out,"%c",chiffre) ;
+		}
+
+
+  fclose(f_in) ;
+  fclose(f_out) ;
+  return ;
+}
+
 
 
 int main(int argc, char *argv[0])
