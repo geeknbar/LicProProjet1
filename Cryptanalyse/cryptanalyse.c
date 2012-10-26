@@ -10,7 +10,7 @@ double indiceCoincidence(int t[N], int nblettres);
 unsigned int longueurCle(char *entree, int t[N]);
 int lettreMotCle(int t[N]);
 void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n);
-void motClef(char *entree, int t[N], int *cle, int tailleCle);
+void motClef(char *entree, int t[N], unsigned int *cle, int tailleCle);
 
 void initTab(int t[N])
 {
@@ -20,11 +20,13 @@ void initTab(int t[N])
 }
    
 //renvoie le nombre de lettres totales dans le texte et compte le nombre de chaque lettres du texte
-void motClef(char *entree, int t[N], int *cle, int tailleCle)
+void motClef(char *entree, int t[N], unsigned int *cle, int tailleCle)
 {
    FILE *f_in;
-   int compteurLongeurCle =1;
-   int c,j;
+   int compteurLongeurCle=1;
+   int c;
+   int j=0;
+   
    int i=0;
    //valeur pour sortir du while principal quand on atteint la fin de fichier
    int val=0;
@@ -35,17 +37,22 @@ void motClef(char *entree, int t[N], int *cle, int tailleCle)
      fprintf(stderr,"Erreur ds l’ouverture du fichier %s\n", entree);
      return;
        }
-while (compteurLongeurCle!=tailleCle){
+       
+while (compteurLongeurCle!=tailleCle+1){
+  val=0;
+  test=0;
   initTab(t);
-  
  while (val==0)
    {
     
     if(test==0)
     {
-     for(j=0;j<compteurLongeurCle;j++)
-      fseek(f_in,0+j , SEEK_SET);
-     test=1;
+     
+      fseek(f_in,j,SEEK_SET);
+      c = fgetc(f_in);
+      printf("lettre %c",c);
+      printf("\n");
+      test=1;
     }
     else
     {  
@@ -63,16 +70,33 @@ while (compteurLongeurCle!=tailleCle){
        }
      }
      
+	 printf("lettre tableau %c",c);
+      printf("\n");
      if((c>=65) && (c<=90)) //si la lettre est majuscule
      {
        t[c-65]=t[c-65]+1; /*retire 65 a la lettre pour qu'elle corresponde a sa case das le tableau (0 pour A, 1 our B etc..) et *ajoute +1 a chaque fois que la lettre 'c' est rencontrée*/
      }
+
    } //fin while secondaire
 
-   cle[compteurLongeurCle-1]=lettreMotCle(t);
+   int k=0;
+   for(k=0;k<N;k++)
+     printf(" %c %d |",k+65,t[k]);
+   
+   printf("\n");
+   int test=lettreMotCle(t);
+   printf("%c",test+65);
+   printf("\n");
+   
+   cle[compteurLongeurCle-1]=test;
    compteurLongeurCle++;
+   j++;
+   printf("%d",compteurLongeurCle);
+   printf("\n");
+   
    
 }//fin while principal
+fclose(f_in);
 }
 
 //renvoie le nombre de lettres totales dans le texte et compte le nombre de chaque lettres du texte
@@ -130,6 +154,7 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
    } //fin while
 
    *tailleText=nbLettresTotal;
+   fclose(f_in);
 }
 
 double indiceCoincidence(int t[N], int nblettres)
@@ -247,10 +272,11 @@ int main(int argc, char *argv[0])
    }*/
 
 	 tailleCle=longueurCle(argv[1], t);
-	 cle=malloc(tailleCle*sizeof(unsigned int));
-	 motClef(argv[0],t,cle,tailleCle);
+	 cle=calloc(tailleCle,sizeof(unsigned int));
+	 motClef(argv[1],t,cle,tailleCle);
 	 for (i=0;i<tailleCle;i++)
-	   printf("%c",t[i]+65);
+	   printf("%c",cle[i]+65);
+	 dechiffrement(argv[1], argv[2],cle,tailleCle);
 	 free(cle);
    
   return 0;
