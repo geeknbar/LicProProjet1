@@ -139,5 +139,7 @@ int main(int argc, char *argv[0])
     printf("veuillez rentrer un clef égale à votre longueur de clef\n");
   }
 
+	free(clef);
+
 	return 0;
 }

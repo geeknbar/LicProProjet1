@@ -58,14 +58,7 @@ while (compteurLongeurCle!=tailleCle+1){
        for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
        {
 
-				 if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
-				 { 
-					c = fgetc(f_in);
-					i--;
-				 }
-				 else
-				 {
-         if(c==32)
+         if( (c==32) || ( (c>=48) && (c<=57) ) )
          {
            c = fgetc(f_in);
            i--;
@@ -75,8 +68,8 @@ while (compteurLongeurCle!=tailleCle+1){
 
          if(c== EOF)
             val=1;
-      	 }
-			 }
+      	 
+			  }
      }
      
 
@@ -134,14 +127,7 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
        for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
        {
 
-				 if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
-				 { 
-					c = fgetc(f_in);
-					i--;
-				 }
-				 else
-				 {
-         if(c==32)
+         if( (c==32) || ( (c>=48) && (c<=57) ) )
          {
            c = fgetc(f_in);
            i--;
@@ -151,7 +137,7 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
 					
          if(c== EOF)
             val=1;
-         }
+        
 			 }
      }
      
@@ -241,11 +227,7 @@ void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 	while ((c = fgetc(f_in)) != EOF)
     {
 
-			if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
-				fprintf(f_out,"%c",c);
-			else
-			{
-			if (c==32)
+			if( (c==32) || (c>=48) && (c<=57) )
 				chiffre=32;
 	
 		 	else
@@ -256,7 +238,7 @@ void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
 		 
 		 
 		 	fprintf(f_out,"%c",chiffre) ;
-			}
+		
 		}
 
 

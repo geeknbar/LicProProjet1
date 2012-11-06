@@ -32,7 +32,7 @@ void dechiffrement(char *entree, char *sortie,unsigned int *clef,unsigned int n)
     {
 
 			if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
-				fprintf(f_out,"%c",c)
+				fprintf(f_out,"%c",c);
 			else
 			{
 			if (c==32)
