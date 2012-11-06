@@ -23,6 +23,7 @@ void initTab(int t[N])
 void motClef(char *entree, int t[N], unsigned int *cle, int tailleCle)
 {
    FILE *f_in;
+	 int lettretmp;
    int compteurLongeurCle=1;
    int c;
    int j=0;
@@ -62,7 +63,8 @@ while (compteurLongeurCle!=tailleCle+1){
            i--;
          }
          else
-	   c = fgetc(f_in);
+	   			c = fgetc(f_in);
+
          if(c== EOF)
             val=1;
        }
@@ -77,8 +79,8 @@ while (compteurLongeurCle!=tailleCle+1){
 
    } //fin while secondaire
 
-   
-   cle[compteurLongeurCle-1]=test;
+   lettretmp=lettreMotCle(t);
+   cle[compteurLongeurCle-1]=lettretmp;
    compteurLongeurCle++;
    j++;
   
@@ -122,6 +124,11 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
     {  
        for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
        {
+
+				 if( (c>=48) && (c<=57) ) //si 'c' est un chiffre 
+					c = fgetc(f_in);
+				 else
+				 {
          if(c==32)
          {
            c = fgetc(f_in);
@@ -132,7 +139,8 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
 					
          if(c== EOF)
             val=1;
-       }
+         }
+			 }
      }
      
      if((c>=65) && (c<=90)) //si la lettre est majuscule
@@ -252,6 +260,7 @@ int main(int argc, char *argv[0])
 	 unsigned int *cle;
 	 unsigned int tailleCle;
 	 int i;
+	 int tmp;
 
 	 if (argc != 3)											//tester le nombre d'arguments, exit si nombre incorrect 
    {
@@ -263,6 +272,9 @@ int main(int argc, char *argv[0])
 	 tailleCle=longueurCle(argv[1], t);
 	 cle=calloc(tailleCle,sizeof(unsigned int));
 	 motClef(argv[1],t,cle,tailleCle);
+	 dechiffrement(argv[1], argv[2], cle, tailleCle);
+	 nbLettres(argv[1], t, &tmp, tailleCle);
+	 printf("nb lettres : %d\n", tmp);
 	 free(cle);
    
   return 0;

@@ -264,6 +264,7 @@ int main(int argc, char *argv[0])
 	 cle=calloc(tailleCle,sizeof(unsigned int));
 	 motClef(argv[1],t,cle,tailleCle);
 	 free(cle);
+	 dechiffrement(argv[1], argv[2], cle, tailleCle);
    
   return 0;
 }
