@@ -23,6 +23,7 @@ void initTab(int t[N])
 void motClef(char *entree, int t[N], unsigned int *cle, int tailleCle)
 {
    FILE *f_in;
+	 int lettretmp;
    int compteurLongeurCle=1;
    int c;
    int j=0;
@@ -56,13 +57,20 @@ while (compteurLongeurCle!=tailleCle+1){
     {  
        for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
        {
+
+				 if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
+				 { 
+					c = fgetc(f_in);
+					i--;
+				 }
          if(c==32)
          {
            c = fgetc(f_in);
            i--;
          }
          else
-	   c = fgetc(f_in);
+	   			c = fgetc(f_in);
+
          if(c== EOF)
             val=1;
        }
@@ -77,8 +85,8 @@ while (compteurLongeurCle!=tailleCle+1){
 
    } //fin while secondaire
 
-   
-   cle[compteurLongeurCle-1]=test;
+   lettretmp=lettreMotCle(t);
+   cle[compteurLongeurCle-1]=lettretmp;
    compteurLongeurCle++;
    j++;
   
@@ -122,6 +130,14 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
     {  
        for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
        {
+
+				 if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
+				 { 
+					c = fgetc(f_in);
+					i--;
+				 }
+				 else
+				 {
          if(c==32)
          {
            c = fgetc(f_in);
@@ -132,7 +148,8 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
 					
          if(c== EOF)
             val=1;
-       }
+         }
+			 }
      }
      
      if((c>=65) && (c<=90)) //si la lettre est majuscule
@@ -163,19 +180,19 @@ double indiceCoincidence(int t[N], int nblettres)
 
 unsigned int longueurCle(char *entree, int t[N])
 {
-	int j, nblettre;
+	int tailleCle, nblettre;
 	double indice=0;
 
-	  for(j=1; indice<0.0700; j++)
+	  for(tailleCle=1; indice<0.0700; tailleCle++)
    {
        initTab(t);
        nblettre=0;
        indice=0;
-       nbLettres(entree, t, &nblettre, j);
+       nbLettres(entree, t, &nblettre, tailleCle);
        indice=indiceCoincidence(t, nblettre);
    }
 	
-	return(j-1);
+	return(tailleCle-1);
 }
 
 
@@ -263,8 +280,13 @@ int main(int argc, char *argv[0])
 	 tailleCle=longueurCle(argv[1], t);
 	 cle=calloc(tailleCle,sizeof(unsigned int));
 	 motClef(argv[1],t,cle,tailleCle);
-	 free(cle);
 	 dechiffrement(argv[1], argv[2], cle, tailleCle);
+	 printf("la clé est : ");
+	 for(i=0; i<tailleCle; i++)
+		printf("%c", cle[i]+65);
+
+	 printf("\n");
+	 free(cle);
    
   return 0;
 }

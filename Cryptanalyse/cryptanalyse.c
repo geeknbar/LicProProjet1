@@ -57,6 +57,14 @@ while (compteurLongeurCle!=tailleCle+1){
     {  
        for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
        {
+
+				 if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
+				 { 
+					c = fgetc(f_in);
+					i--;
+				 }
+				 else
+				 {
          if(c==32)
          {
            c = fgetc(f_in);
@@ -67,7 +75,8 @@ while (compteurLongeurCle!=tailleCle+1){
 
          if(c== EOF)
             val=1;
-       }
+      	 }
+			 }
      }
      
 
@@ -125,8 +134,11 @@ void nbLettres(char *entree, int t[N], int *tailleText, int tailleCle)
        for(i=0;i<tailleCle;i++) //boucle permettant d'avancer le caractere lu en fonction de la longeur de la clef testee
        {
 
-				 if( (c>=48) && (c<=57) ) //si 'c' est un chiffre 
+				 if( (c>=48) && (c<=57) ) //si 'c' est un chiffre
+				 { 
 					c = fgetc(f_in);
+					i--;
+				 }
 				 else
 				 {
          if(c==32)
@@ -171,19 +183,19 @@ double indiceCoincidence(int t[N], int nblettres)
 
 unsigned int longueurCle(char *entree, int t[N])
 {
-	int j, nblettre;
+	int tailleCle, nblettre;
 	double indice=0;
 
-	  for(j=1; indice<0.0700; j++)
+	  for(tailleCle=1; indice<0.0700; tailleCle++)
    {
        initTab(t);
        nblettre=0;
        indice=0;
-       nbLettres(entree, t, &nblettre, j);
+       nbLettres(entree, t, &nblettre, tailleCle);
        indice=indiceCoincidence(t, nblettre);
    }
 	
-	return(j-1);
+	return(tailleCle-1);
 }
 
 
@@ -260,7 +272,6 @@ int main(int argc, char *argv[0])
 	 unsigned int *cle;
 	 unsigned int tailleCle;
 	 int i;
-	 int tmp;
 
 	 if (argc != 3)											//tester le nombre d'arguments, exit si nombre incorrect 
    {
@@ -273,8 +284,11 @@ int main(int argc, char *argv[0])
 	 cle=calloc(tailleCle,sizeof(unsigned int));
 	 motClef(argv[1],t,cle,tailleCle);
 	 dechiffrement(argv[1], argv[2], cle, tailleCle);
-	 nbLettres(argv[1], t, &tmp, tailleCle);
-	 printf("nb lettres : %d\n", tmp);
+	 printf("la clé est : ");
+	 for(i=0; i<tailleCle; i++)
+		printf("%c", cle[i]+65);
+
+	 printf("\n");
 	 free(cle);
    
   return 0;
