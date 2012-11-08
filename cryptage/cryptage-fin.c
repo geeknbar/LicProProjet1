@@ -1,3 +1,13 @@
+/*
+##################################################
+#			                         #
+#        Projet LicPro Info 2012/2013            #
+#            Le code de Vigenere                 #
+#                                                #
+# Romain Prieur,Lassalle Anthony,Coffinet Dorian #  
+#			                         #
+##################################################
+*/
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
